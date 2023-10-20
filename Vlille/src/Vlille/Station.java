@@ -19,19 +19,30 @@ public class Station{
     }
 
     public boolean DepositBike(Bike bike){
-        if (bikes.size() < capacity){
-            bikes.add(bike);
+        if (this.bikes.size() < capacity){
+            this.bikes.add(bike);
             return true;
-
         }
         return false;
     }
 
     public Bike TakeBike(){
-        if (bikes.size() > 0){
-            return bikes.remove(0);
-
+        if (this.bikes.size() > 0){
+            return this.bikes.remove(0);
         }
         return null;
     }
+
+    public int GetId(){
+        return this.id;   
+    }
+
+
+    public boolean LocationIsEmpty(int nb){
+        return this.bikes.get(nb) == null;
+    }
+    
+
+
+
 }
