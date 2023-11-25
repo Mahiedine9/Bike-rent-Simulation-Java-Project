@@ -1,7 +1,7 @@
 package vlille;
 
-import Exceptions.BikeNotRentableException;
-import Exceptions.BikeNotReturnableException;
+import exceptions.BikeNotRentableException;
+import exceptions.BikeNotReturnableException;
 
 /**
  * This class represents the "Under Repair" state of a bike in a bike sharing system.
@@ -18,7 +18,7 @@ public class UnderReparation extends State {
      */
     @Override
     public void Repair(Transport bike) {
-        throw new BikeAlreadyUnderRepair("Bike is already under repair and cannot be repaired")
+        throw new BikeAlreadyUnderRepair("Bike is already under repair and cannot be repaired");
     }
 
     /**
