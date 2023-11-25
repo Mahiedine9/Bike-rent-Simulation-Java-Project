@@ -12,6 +12,7 @@ public class Bike {
     private final int RentalMax = 10; // This can be set to whatever max value is appropriate
     private State currentState;
 
+
     // Constructor
     public Bike(int id, boolean hasBasket, boolean hasLuggageRack) {
         this.id = id;
@@ -19,49 +20,38 @@ public class Bike {
         this.hasLuggageRack = hasLuggageRack;
         this.rentalCount = 0;
         this.currentState = new InService(); // Assuming the bike starts in an InService state
+
     }
 
     // Setters and Getters
-    public void setState(State newState) {
+    public void SetState(State newState) {
         this.currentState = newState;
     }
 
-    public State getState() {
-        return currentState;
+    public State GetState() {
+        return this.currentState;
     }
 
-    public int getId() {
-        return id;
+    public int GetId() {
+        return this.id;
     }
 
-    public boolean hasBasket() {
-        return hasBasket;
+    public boolean HasBasket() {
+        return this.hasBasket;
     }
 
-    public boolean hasLuggageRack() {
-        return hasLuggageRack;
+    public boolean HasLuggageRack() {
+        return this.hasLuggageRack;
     }
 
-    public int getRentalCount() {
-        return rentalCount;
+    public int GetRentalCount() {
+        return this.rentalCount;
     }
 
-    public void setRentalCount(int rentalCount) {
+    public void SetRentalCount(int rentalCount) {
         this.rentalCount = rentalCount;
     }
 
-    // Delegating State-specific behaviors
-    public void repair() throws BikeNotRepairableException {
-        currentState.repair(this);
-    }
+ 
 
-    public void rent() throws BikeNotRentableException {
-        currentState.rent(this);
-    }
-
-    public void deposit() throws BikeNotReturnableException {
-        currentState.deposit(this);
-    }
-
-    // Additional methods can be added as per project requirements
 }

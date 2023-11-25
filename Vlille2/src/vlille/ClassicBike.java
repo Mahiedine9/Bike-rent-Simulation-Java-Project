@@ -1,5 +1,9 @@
 package vlille;
 
-public class ClassicBike {
+public class ClassicBike extends Bike{
+
+    public ClassicBike(){
+        super();
+    }
     
 }
