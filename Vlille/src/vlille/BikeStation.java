@@ -1,6 +1,6 @@
-package vlille.station;
+package vlille;
 
-import vlille.bike.Bike;
+import Vlille.Bike;
 
 public class BikeStation {
 

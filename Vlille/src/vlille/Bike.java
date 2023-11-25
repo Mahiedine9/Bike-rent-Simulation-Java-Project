@@ -1,25 +1,22 @@
 package vlille;
 
-import Exceptions.BikeNotRepairableException;
-import Exceptions.BikeNotRentableException;
-import Exceptions.BikeNotReturnableException;
 
-public class Bike {
+public class Bike implements Transport{
     private int id;
     private boolean hasBasket;
     private boolean hasLuggageRack;
     private int rentalCount;
-    private final int RentalMax = 10; // This can be set to whatever max value is appropriate
+    private final int rentalMax = 10; // This can be set to whatever max value is appropriate
     private State currentState;
 
 
     // Constructor
-    public Bike(int id, boolean hasBasket, boolean hasLuggageRack) {
+    public Bike(int id, boolean hasBasket, boolean hasLuggageRack, State state) {
         this.id = id;
         this.hasBasket = hasBasket;
         this.hasLuggageRack = hasLuggageRack;
         this.rentalCount = 0;
-        this.currentState = new InService(); // Assuming the bike starts in an InService state
+        this.currentState = state; // Assuming the bike starts in an InService state
 
     }
 
@@ -48,26 +45,9 @@ public class Bike {
         return this.rentalCount;
     }
 
-    public void UpdateRentalCount() {
-        this.rentalCount++;
+    public void SetRentalCount(int rentalCount) {
+        this.rentalCount = rentalCount;
     }
-
-    public void Rent(){
-        this.State.Rent();
-        
-    }
-
-    
-
-
-
-
-
-
-
-
-
-
 
  
 
