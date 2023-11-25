@@ -1,12 +1,23 @@
-#PROJET COO 2023
+# PROJET COO 2023 - simulation Location Vlille
 
-## simulation location Vlille
 
-### binomes : 
- #### MAHIEDINE FERDJOUKH ET HOUSSAM-EDDINE FIDANI
+## binomes : 
+ -MAHIEDINE FERDJOUKH
+ -HOUSSAM-EDDINE FIDANI
 
-### avancement du projet :
- #### UML fait
+
+### Description du Projet
+Ce projet consiste en la simulation d'un système de location de vélos à Lille (Vlille). Les binômes travaillent ensemble pour concevoir et mettre en œuvre cette simulation.
+
+
+ ### Tâches Accomplies
+
+ - [x] UML réalisé
+ - [] Classes 
+ - [] Tests 
+ - [] Main
+ 
+   
 
   
 

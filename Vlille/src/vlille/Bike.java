@@ -45,9 +45,21 @@ public class Bike implements Transport{
         return this.rentalCount;
     }
 
-    public void SetRentalCount(int rentalCount) {
-        this.rentalCount = rentalCount;
+    public void UpdateRentalCount(int rentalCount) {
+        this.rentalCount++;
     }
+
+    public void Rent(){
+        this.State.Rent(this);
+    }
+    
+    public void Deposit(){
+        this.State.Deposit(this);
+    }
+
+    public void Repair(){
+        this.State.Repair(this);
+    }   
 
  
 
