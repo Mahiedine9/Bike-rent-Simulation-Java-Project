@@ -1,8 +1,6 @@
 package vlille;
 
-import exceptions.BikeNotRepairableException;
-import exceptions.BikeNotRentableException;
-import exceptions.BikeNotReturnableException;
+
 
 /**
  * Represents a bike in a bike sharing system.
@@ -90,41 +88,18 @@ public class Bike implements Transport {
      *
      * @param rentalCount The new rental count.
      */
-    public void UpdateRentalCount(int rentalCount) {
+    public void UpdateRentalCount() {
         this.rentalCount++;
     }
 
-    /**
-     * Rents the bike using the current state's rent method.
-     */
-    public void Rent(){
-        try{
-            this.currentState.Rent(this);
+    public int GetRentalMax(){
+        return this.rentalMax;
+    } 
 
-        }catch (BikeNotRentableException e){
-            System.err.println("erreur lors de la location du vélo :" + e.getMessage());
-        }  
+    @Override
+    public String toString() {
+        return "Bike [id=" + id + ", hasBasket=" + hasBasket + ", hasLuggageRack=" + hasLuggageRack + ", rentalCount="
+                + rentalCount + ", rentalMax=" + rentalMax + ", currentState=" + currentState + "]";
     }
 
-    /**
-     * Deposits the bike using the current state's deposit method.
-     */
-    public void Deposit() {
-        try {
-        this.currentState.Deposit(this);
-    } catch (BikeNotReturnableException e) {
-        System.err.println("Erreur lors du dépôt du vélo : " + e.getMessage());
-    }
-    }
-
-    /**
-     * Repairs the bike using the current state's repair method.
-     */
-    public void Repair() {
-        try {
-        this.currentState.Repair(this);
-    } catch (BikeNotRepairableException e) {
-        System.err.println("Erreur lors de la réparation du vélo : " + e.getMessage());
-    }
-    }
 }

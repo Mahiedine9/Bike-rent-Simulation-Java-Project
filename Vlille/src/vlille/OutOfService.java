@@ -1,8 +1,6 @@
 package vlille;
 
-import Exceptions.BikeNotRentableException;
-import Exceptions.BikeNotReturnableException;
-import Exceptions.BikeNotRepairableException;
+import exceptions.*;
 
 /**
  * This class represents the "Out of Service" state of a bike in a bike sharing system.
@@ -16,9 +14,9 @@ public class OutOfService extends State {
      * @param bike The bike to be repaired.
      */
     @Override
-    public void Repair(Transport bike) {
+    public void Repair(Bike bike) {
         // Logic to repair the bike
-        bike.setState(new InService());
+        bike.SetState(new InService());
     }
 
     /**
@@ -28,7 +26,7 @@ public class OutOfService extends State {
      * @throws BikeNotRentableException Thrown when attempting to rent a bike out of service.
      */
     @Override
-    public void Rent(Transport bike) throws BikeNotRentableException {
+    public void Rent(Bike bike) throws BikeNotRentableException {
         throw new BikeNotRentableException("Bike is out of service and cannot be rented.");
     }
 
@@ -39,7 +37,14 @@ public class OutOfService extends State {
      * @throws BikeNotReturnableException Thrown when attempting to deposit a bike out of service.
      */
     @Override
-    public void Deposit(Transport bike) throws BikeNotReturnableException {
+    public void Deposit(Bike bike, Station station, int space) throws BikeNotReturnableException {
         throw new BikeNotReturnableException("Bike is out of service and cannot be deposited.");
     }
+
+    @Override
+    public void Take(Bike bike, Station station, int space) throws BikeNotRemovableException{
+        throw new BikeNotRemovableException("Bike is out of service and cannot be removed.");
+    }  
+
+
 }

@@ -1,8 +1,6 @@
 package vlille;
 
-import Exceptions.BikeNotRepairableException;
-import Exceptions.BikeNotRentableException;
-import Exceptions.BikeNotReturnableException;
+import exceptions.*;
 
 /**
  * This class represents the "Stolen" state of a bike in a bike sharing system.
@@ -17,7 +15,7 @@ public class Stolen extends State {
      * @throws BikeNotRepairableException Thrown when attempting to repair a stolen bike.
      */
     @Override
-    public void Repair(Transport bike) throws BikeNotRepairableException {
+    public void Repair(Bike bike) throws BikeNotRepairableException {
         throw new BikeNotRepairableException("Bike is stolen and cannot be repaired.");
     }
 
@@ -28,7 +26,7 @@ public class Stolen extends State {
      * @throws BikeNotRentableException Thrown when attempting to rent a stolen bike.
      */
     @Override
-    public void Rent(Transport bike) throws BikeNotRentableException {
+    public void Rent(Bike bike) throws BikeNotRentableException {
         throw new BikeNotRentableException("Bike is stolen and cannot be rented.");
     }
 
@@ -39,7 +37,12 @@ public class Stolen extends State {
      * @throws BikeNotReturnableException Thrown when attempting to deposit a stolen bike.
      */
     @Override
-    public void Deposit(Transport bike) throws BikeNotReturnableException {
+    public void Deposit(Bike bike, Station station, int space) throws BikeNotReturnableException {
         throw new BikeNotReturnableException("Bike is stolen and cannot be deposited.");
     }
+
+    @Override
+    public void Take(Bike bike, Station station) throws BikeNotRemovableException{
+        throw new BikeNotRemovableException("Bike is out of service and cannot be removed.");
+    } 
 }
