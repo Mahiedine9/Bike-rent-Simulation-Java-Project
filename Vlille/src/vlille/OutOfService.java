@@ -42,7 +42,7 @@ public class OutOfService extends State {
     }
 
     @Override
-    public void Take(Bike bike, Station station, int space) throws BikeNotRemovableException{
+    public void Take(Bike bike, Station station) throws BikeNotRemovableException{
         throw new BikeNotRemovableException("Bike is out of service and cannot be removed.");
     }  
 
