@@ -14,8 +14,8 @@ public class OutOfService extends State {
      * @param bike The bike to be repaired.
      */
     @Override
-    public void Repair(Bike bike) {
-        // Logic to repair the bike
+    public void Repair(Bike bike, Service reparator) {    
+        reparator.ControlService(bike);
         bike.SetState(new InService());
     }
 

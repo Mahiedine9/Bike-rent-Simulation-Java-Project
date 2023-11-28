@@ -14,7 +14,7 @@ public class InService extends State {
      * @throws BikeNotRepairableException Thrown when attempting to repair a bike in service.
      */
     @Override
-    public void Repair(Bike bike) throws BikeNotRepairableException {
+    public void Repair(Bike bike, Service reparator) throws BikeNotRepairableException {
         throw new BikeNotRepairableException("Bike is in service and cannot be repaired.");
     }
 

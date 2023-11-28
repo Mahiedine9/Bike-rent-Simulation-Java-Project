@@ -16,7 +16,7 @@ public class UnderReparation extends State {
      * @param bike The bike to be repaired.
      */
     @Override
-    public void Repair(Bike bike) throws BikeNotRepairableException{
+    public void Repair(Bike bike, Service reparator) throws BikeNotRepairableException{
         throw new BikeNotRepairableException("Bike is already under repair and cannot be repaired");
     }
 

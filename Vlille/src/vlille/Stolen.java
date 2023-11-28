@@ -15,7 +15,7 @@ public class Stolen extends State {
      * @throws BikeNotRepairableException Thrown when attempting to repair a stolen bike.
      */
     @Override
-    public void Repair(Bike bike) throws BikeNotRepairableException {
+    public void Repair(Bike bike, Service reparator) throws BikeNotRepairableException {
         throw new BikeNotRepairableException("Bike is stolen and cannot be repaired.");
     }
 
