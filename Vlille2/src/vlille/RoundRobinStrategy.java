@@ -1,7 +1,8 @@
 package vlille;
 
-import java.util.Random;
 import java.util.List;
+import java.util.ArrayList;
+import exceptions.*;
 
 public class RoundRobinStrategy implements RedistributionStrategy {
 
@@ -13,43 +14,41 @@ public class RoundRobinStrategy implements RedistributionStrategy {
     
     @Override
     public void redistribute() {
-        List<Station> stations = controlCenter.getAllStations();
-        int totalBikesNeeded = calculateTotalBikesNeeded(stations);
+        List<Station> stations = controlCenter.getStations();
+        List<Bike> bikesForRedistribution = getBikesForRedistribution(stations);
 
         for (Station station : stations) {
-            int bikesNeeded = station.getCapacity() - station.getBikeCount();
-            if (bikesNeeded > 0 && totalBikesNeeded > 0) {
-                dispatchBikesToStation(station, bikesNeeded);
-                totalBikesNeeded -= bikesNeeded;
+            int bikesNeeded = station.getCapacity() - station.getNumberOfBikes();
+
+            while (bikesNeeded > 0 && !bikesForRedistribution.isEmpty()) {
+                Bike bike = bikesForRedistribution.remove(0);
+                try {
+                    station.addBike(bike, station.findEmptySlot()); // Assuming Station has a method to find an empty slot
+                    bikesNeeded--;
+                } catch (OccupiedLocationException e) {
+                    // Handle the situation where the slot is unexpectedly occupied
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    private int calculateTotalBikesNeeded(List<Station> stations) {
-        int total = 0;
+    private List<Bike> getBikesForRedistribution(List<Station> stations) {
+        List<Bike> bikes = new ArrayList<>();
         for (Station station : stations) {
-            total += station.getCapacity() - station.getBikeCount();
+            while (station.getNumberOfBikes() > station.getCapacity()) {
+                try {
+                    Bike bikeToRemove = station.selectBikeForRemoval(); // This method needs to be implemented in Station
+                    if (bikeToRemove != null) {
+                        station.TakeBike(bikeToRemove);
+                        bikes.add(bikeToRemove);
+                    }
+                } catch (BikeNotRemovableException e) {
+                    // Handle the exception, e.g., skip to the next bike or break the loop
+                    e.printStackTrace();
+                }
+            }
         }
-        return total;
-    }
-
-    private void dispatchBikesToStation(Station station, int count) {
-        for (int i = 0; i < count; i++) {
-            // Generate a random bike ID (or any other unique identifier)
-            String bikeId = generateRandomBikeId();
-
-            // Create a new bike with random parameters
-            Bike bike = new Bike(bikeId);
-
-            // Add the bike to the station
-            station.addBike(bike);
-        }
-    }
-
-    private String generateRandomBikeId() {
-        Random random = new Random();
-        // Generate a random ID; this is a basic example, adjust as needed
-        return "Bike-" + random.nextInt(10000);
+        return bikes;
     }
 }
-

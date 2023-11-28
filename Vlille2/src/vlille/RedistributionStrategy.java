@@ -1,3 +1,4 @@
+package vlille;
 
 
 public interface RedistributionStrategy {
