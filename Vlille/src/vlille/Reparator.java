@@ -11,7 +11,7 @@ public class Reparator implements Service{
         
         System.out.println("Réparation du vélo en cours...");
 
-        // Planifier la tâche de remise en service après 5min
+        // Planifier la tâche de remise en service après 1min
         Timer repairTimer = new Timer();
         repairTimer.schedule(new TimerTask() {
             @Override
@@ -22,7 +22,7 @@ public class Reparator implements Service{
                 // Annuler le timer après la tâche
                 repairTimer.cancel();
             }
-        }, 5 * 60 * 1000);  // Intervalle en millisecondes (5 minutes dans cet exemple)
+        },   30 * 1000);  
     }
     
 }
