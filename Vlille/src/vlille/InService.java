@@ -46,7 +46,7 @@ public class InService extends State {
             throw new BikeNotReturnableException("Station is full, bike couldn't be added.");
         }
         try{
-            station.AddBike(bike, space);
+            station.addBike(bike, space);
 
         }catch (Exception e) {
             throw new BikeNotReturnableException("La place est déjà occupée par un autre vélo.");

@@ -4,26 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import exceptions.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ControlCenter {
     private ArrayList<Station> stations;
-    private int interval; // Interval between checks for redistribution and servicing
-    private int maxRental; // Max rentals before a bike needs service
     private List<Service> services; // Services available for repairing bikes
     private ArrayList<Bike> bikesRented; // Bikes that are currently rented
     private ArrayList<Bike> bikesDeposit; // Bikes that are deposited at stations
     private int nbInterval; // Number of intervals for simulation
     private RedistributionStrategy modeDistribution;
-
-    public ControlCenter(int interval, RedistributionStrategy modeDistribution, int maxRental, int nbInterval) {
+    private Timer intervalle;
+    public ControlCenter(RedistributionStrategy modeDistribution, int maxRental, int nbInterval) {
         this.stations = new ArrayList<>();
         this.services = new ArrayList<>();
         this.bikesRented = new ArrayList<>();
         this.bikesDeposit = new ArrayList<>();
-        this.interval = interval;
         this.modeDistribution = modeDistribution;
-        this.maxRental = maxRental;
         this.nbInterval = nbInterval;
+        
     }
 
     // Fixes the bikes that require servicing
@@ -61,23 +60,6 @@ public class ControlCenter {
         this.bikesDeposit.add(bike);
     }
 
-    // Simulates actions that occur within each interval
-    public void simulateInterval() {
-        // Go through each station and simulate activity
-        for (Station station : stations) {
-            // Simulate bike rentals
-            for (Bike bike : station.getBikes()) {
-                if (bike.GetState() instanceof InService) {
-                    bike.UpdateRentalCount();
-                    if (bike.GetRentalCount() >= maxRental) {
-                        bike.SetState(new OutOfService());
-                        bikesDeposit.add(bike);
-                    }
-                }
-            }
-        }
-    }
-
     // Simulates random deposits and withdrawals of bikes at stations
     public void randomDepositWithdrawal() {
         Random rand = new Random();
@@ -103,20 +85,44 @@ public class ControlCenter {
     }
     
 
-    // Runs the overall simulation
-    public void simulation() {
-        for (int i = 0; i < nbInterval; i++) {
-            simulateInterval();
-            fix();
-            randomDepositWithdrawal();
-            distribute();
-            // Additional simulation steps as needed...
-        }
+    
+    public void depositWithdrawalSimulateIntervalle() {
+        intervalle.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                randomDepositWithdrawal();
+                System.out.println("random Deposit and Withdrawal done");
+            }
+        }, 0, 40 *1000);
     }
+
+    public void EmptyStationsSimulateIntervalle(){
+        intervalle.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                for (Station station : stations){
+                    if (station.getNumberOfBikes() == 0){
+                        distribute();
+                        System.out.println("distribute done");
+                    } 
+                } 
+                
+            }
+        }, 0, 80 *1000);
+
+
+    }
+
+
+
 
     public List<Station> getStations() {
         return new ArrayList<>(stations); // Return a copy of the stations list to avoid external modifications
     }
+
+    public void AddStation(Station station){
+        this.stations.add(station) ;
+    } 
     
 }
 

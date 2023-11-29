@@ -23,7 +23,7 @@ public class RoundRobinStrategy implements RedistributionStrategy {
             while (bikesNeeded > 0 && !bikesForRedistribution.isEmpty()) {
                 Bike bike = bikesForRedistribution.remove(0);
                 try {
-                    station.addBike(bike, station.findEmptySlot()); // Assuming Station has a method to find an empty slot
+                    station.addBike(bike, station.findEmptySlot());
                     bikesNeeded--;
                 } catch (OccupiedLocationException e) {
                     // Handle the situation where the slot is unexpectedly occupied
@@ -36,19 +36,23 @@ public class RoundRobinStrategy implements RedistributionStrategy {
     private List<Bike> getBikesForRedistribution(List<Station> stations) {
         List<Bike> bikes = new ArrayList<>();
         for (Station station : stations) {
-            while (station.getNumberOfBikes() > station.getCapacity()) {
-                try {
-                    Bike bikeToRemove = station.selectBikeForRemoval(); // This method needs to be implemented in Station
-                    if (bikeToRemove != null) {
-                        station.TakeBike(bikeToRemove);
-                        bikes.add(bikeToRemove);
+            if (station.getNumberOfBikes() > station.getCapacity()) {
+                while (station.getNumberOfBikes() > station.getCapacity()) {
+                    try {
+                        Bike bikeToRemove = station.selectBikeForRemoval();
+                        if (bikeToRemove != null) {
+                            station.TakeBike(bikeToRemove);
+                            bikes.add(bikeToRemove);
+                        }
+                    } catch (BikeNotRemovableException e) {
+                        // Gérer l'exception, par exemple, passer au vélo suivant ou sortir de la boucle
+                        e.printStackTrace();
+                        break; // Sortir de la boucle en cas d'erreur
                     }
-                } catch (BikeNotRemovableException e) {
-                    // Handle the exception, e.g., skip to the next bike or break the loop
-                    e.printStackTrace();
                 }
             }
         }
         return bikes;
     }
+    
 }

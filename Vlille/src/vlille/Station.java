@@ -15,6 +15,11 @@ public class Station {
       this.name = name;
       this.capacity = capacity;
       this.bikes = new ArrayList<>(capacity);
+      bikes = new ArrayList<>(capacity);
+        // Initialize all slots with null to represent empty slots.
+        for (int i = 0; i < capacity; i++) {
+            bikes.add(null);
+        }
    }
 
    /**
@@ -28,7 +33,7 @@ public class Station {
     * Renvoie la capacité de la station
     */
    public int getCapacity() {
-      return ((CharSequence) this.bikes).length();
+      return this.capacity;
    }
 
    /**
@@ -42,22 +47,22 @@ public class Station {
       return count;
    }
 
-   /**
-    * Permet de déposer un vélo dans une station.
-    */
-   public void TakeBike(Bike bike) throws BikeNotRemovableException{
-      if (bikes.contains(bike)){
-         bikes.remove(bike);
+   public void TakeBike(Bike bike) throws BikeNotRemovableException {
+      if (bikes.contains(bike)) {
+          bikes.remove(bike);
+      } else {
+          // Only throw the exception if the bike was not found in the list
+          throw new BikeNotRemovableException("Impossible de retirer le vélo");
       }
-      throw new BikeNotRemovableException("impossible de retirer le vélo");
-   }
+  }
+  
 
    public Boolean IsFull(){
       return (this.getNumberOfBikes()) == (this.capacity);
    } 
 
     // deposer un velo
-   public void AddBike(Bike bike, int space) throws OccupiedLocationException{
+   public void addBike(Bike bike, int space) throws OccupiedLocationException{
       try {
          this.bikes.add(space, bike);     
       
@@ -65,6 +70,42 @@ public class Station {
          throw new OccupiedLocationException("la place est déja occupé par un autre vélo");
       }
    } 
+
+   /**
+     * Finds the first empty slot in the station.
+     *
+     * @return the index of the first empty slot, or -1 if the station is full.
+     */
+   public int findEmptySlot() {
+      for (int i = 0; i < bikes.size(); i++) {
+          if (bikes.get(i) == null) {
+              return i;
+          }
+      }
+      return -1; // No empty slots available
+   }
+
+   public Bike selectBikeForRemoval() {
+      // Example: select the first bike found in the station for removal
+      for (Bike bike : bikes) {
+         if (bike != null) {
+            return bike;
+         }
+      }
+      return null; // No bikes available for removal
+   }
+
+   /**
+     * Gets the list of bikes in the station.
+     * 
+     * @return The list of bikes.
+     */
+    public List<Bike> getBikes() {
+      return bikes;
+   }
+   
+
+
 
 }
 
