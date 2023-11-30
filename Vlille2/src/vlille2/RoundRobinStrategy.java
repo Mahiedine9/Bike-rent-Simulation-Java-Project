@@ -17,7 +17,6 @@ public class RoundRobinStrategy implements RedistributionStrategy {
         List<Station> stations = controlCenter.getStations();
         List<Bike> bikesForRedistribution = getBikesForRedistribution(stations);
 
-        // Continuously distribute bikes until there are no more bikes to redistribute
         while (!bikesForRedistribution.isEmpty()) {
             for (Station station : stations) {
                 if (station.getNumberOfBikes() < station.getCapacity() && !bikesForRedistribution.isEmpty()) {
