@@ -12,16 +12,15 @@ public class ControlCenter {
     private List<Service> services; // Services available for repairing bikes
     private ArrayList<Bike> bikesRented; // Bikes that are currently rented
     private ArrayList<Bike> bikesDeposit; // Bikes that are deposited at stations
-    private int nbInterval; // Number of intervals for simulation
     private RedistributionStrategy modeDistribution;
     private Timer intervalle;
-    public ControlCenter(RedistributionStrategy modeDistribution, int maxRental, int nbInterval) {
+
+    public ControlCenter(RedistributionStrategy modeDistribution, int maxRental) {
         this.stations = new ArrayList<>();
         this.services = new ArrayList<>();
         this.bikesRented = new ArrayList<>();
         this.bikesDeposit = new ArrayList<>();
         this.modeDistribution = modeDistribution;
-        this.nbInterval = nbInterval;
         
     }
 
