@@ -15,13 +15,14 @@ public class ControlCenter {
     private RedistributionStrategy modeDistribution;
     private Timer intervalle;
 
+
     public ControlCenter(RedistributionStrategy modeDistribution, int maxRental) {
         this.stations = new ArrayList<>();
         this.services = new ArrayList<>();
         this.bikesRented = new ArrayList<>();
         this.bikesDeposit = new ArrayList<>();
         this.modeDistribution = modeDistribution;
-        
+        this.stations = new ArrayList<>(stations);
     }
 
     // Fixes the bikes that require servicing
@@ -36,10 +37,7 @@ public class ControlCenter {
         }
     }
 
-    // Distribute bikes based on the distribution mode
     public void distribute() {
-        // Implementation of bike distribution logic based on modeDistribution
-        // For simplicity, assuming modeDistribution is a functional interface
         modeDistribution.redistribute();
     }
 
@@ -59,11 +57,9 @@ public class ControlCenter {
         this.bikesDeposit.add(bike);
     }
 
-    // Simulates random deposits and withdrawals of bikes at stations
     public void randomDepositWithdrawal() {
         Random rand = new Random();
         for (Station station : stations) {
-            // Randomly select a bike to deposit or withdraw
             if (rand.nextBoolean() && !bikesRented.isEmpty()) {
                 // Randomly remove a bike from the rented list and deposit it
                 Bike bike = bikesRented.remove(rand.nextInt(bikesRented.size()));
@@ -95,6 +91,7 @@ public class ControlCenter {
         }, 0, 40 *1000);
     }
 
+
     public void EmptyStationsSimulateIntervalle(){
         intervalle.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -112,11 +109,8 @@ public class ControlCenter {
 
     }
 
-
-
-
     public List<Station> getStations() {
-        return new ArrayList<>(stations); // Return a copy of the stations list to avoid external modifications
+        return this.stations; // Return a copy of the stations list to avoid external modifications
     }
 
     public void AddStation(Station station){
