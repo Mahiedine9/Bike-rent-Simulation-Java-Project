@@ -11,7 +11,7 @@ public class SimulationMain {
     public static void main(String[] args) throws OccupiedLocationException {
         
         RandomStrategy randomStrategy = new RandomStrategy(null);
-        ControlCenter controlCenter = new ControlCenter(randomStrategy, 5);
+        ControlCenter controlCenter = ControlCenter.getInstance(randomStrategy, 5);
         randomStrategy.SetControlCenter(controlCenter);
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
@@ -69,6 +69,10 @@ public class SimulationMain {
             } else {
                 System.out.println("Choix non reconnu. Veuillez répondre par 'oui' ou 'non'.");
             }
+
+            scanner.close();
+
+            
 
             
 

@@ -11,7 +11,8 @@ public class RandomStrategyTest {
 
     @Before
     public void setUp() {
-        controlCenter = new ControlCenter(randomStrategy, 5);
+        controlCenter = ControlCenter.getInstance(randomStrategy, 5);
+
         randomStrategy = new RandomStrategy(controlCenter);
     }
 

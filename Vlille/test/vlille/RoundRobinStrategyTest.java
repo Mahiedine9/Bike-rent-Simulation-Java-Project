@@ -17,10 +17,12 @@ public class RoundRobinStrategyTest {
 
     @Before
     public void setUp() {
-        ControlCenter tempControlCenter = new ControlCenter(null, 5); 
+        ControlCenter tempControlCenter = ControlCenter.getInstance(null, 5);
+
         roundRobinStrategy = new RoundRobinStrategy(tempControlCenter);
 
-        controlCenter = new ControlCenter(roundRobinStrategy, 5);
+        controlCenter =  ControlCenter.getInstance(roundRobinStrategy, 5);
+
 
         
         roundRobinStrategy.setControlCenter(controlCenter);

@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ControlCenter {
+    private static ControlCenter instance; 
     private ArrayList<Station> stations;
     private List<Service> services; // Services available for repairing bikes
     private ArrayList<Bike> bikesRented; // Bikes that are currently rented
@@ -16,13 +17,21 @@ public class ControlCenter {
     private Timer intervalle;
 
 
-    public ControlCenter(RedistributionStrategy modeDistribution, int maxRental) {
+    private ControlCenter(RedistributionStrategy modeDistribution, int maxRental) {
+        this.stations = new ArrayList<>();
         this.stations = new ArrayList<>();
         this.services = new ArrayList<>();
         this.bikesRented = new ArrayList<>();
         this.bikesDeposit = new ArrayList<>();
         this.modeDistribution = modeDistribution;
         this.stations = new ArrayList<>(stations);
+    }
+
+    public static ControlCenter getInstance(RedistributionStrategy modeDistribution, int maxRental) {
+        if (instance == null) {
+            instance = new ControlCenter(modeDistribution, maxRental);
+        }
+        return instance;
     }
 
     // Fixes the bikes that require servicing
