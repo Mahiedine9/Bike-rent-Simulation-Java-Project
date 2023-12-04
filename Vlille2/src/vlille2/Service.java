@@ -1,7 +1,7 @@
 package vlille;
 
 /**
- * The Service interface defines a contract for services in a bike-sharing system.
+ * The Service interface defines a contract for services in the bike-sharing system.
  * This interface can be implemented by classes that provide various types of services,
  * such as repairing or maintaining bikes.
  */
