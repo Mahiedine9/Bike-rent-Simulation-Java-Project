@@ -21,8 +21,8 @@ Le projet Vlille est une implémentation en Java d'un système de partage de vé
 ## HowTo :
 
 ### Récupération du code source :
-1.Placez-vous dans le répertoire où vous souhaitez cloner le projet 
-2.git clone https://gitlab-etu.fil.univ-lille.fr/houssameddine.fidani.etu/fidani-coo.git
+1. Placez-vous dans le répertoire où vous souhaitez cloner le projet 
+2. git clone https://gitlab-etu.fil.univ-lille.fr/houssameddine.fidani.etu/fidani-coo.git
 
 ### Générez la documentation : 
 1. Placez-vous dans la racine du projet cloné (pour toutes les autres commandes également)
