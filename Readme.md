@@ -42,7 +42,8 @@ make jar
 ## Éléments de Code Saillants
 ### Conception
 La structure du projet suit une architecture modulaire.
-Utilisation des patterns design State, singleton
+Utilisation des patterns design State, singleton, Strategy.
+
 
 
  
