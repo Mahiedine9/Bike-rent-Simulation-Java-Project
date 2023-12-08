@@ -4,6 +4,8 @@
 SRC_DIR = Vlille/src
 CLASSES_DIR = Vlille/src/classes
 TEST_DIR = Vlille/test
+JUNIT_JAR = lib/junit-4.13.2.jar
+
 
 # Compilateur Java
 JC = javac
@@ -30,16 +32,20 @@ classes: $(SOURCES)
 
 # Compilation des tests
 test-classes: classes $(TESTS)
-	javac -cp junit-4.13.2.jar:vlille/classes test/*/*.java
+	javac -cp $(JUNIT_JAR):$(CLASSES_DIR) $(TEST_DIR)/vlille/*.java
+
+javadoc:
+	javadoc -cp $(CLASSES_DIR) Vlille/src/vlille/*.java -d docs
 
 # Exécution
 run: classes
 	java -cp $(CLASSES_DIR) vlille.SimulationMain
 
+
+
 # Exécution des tests
 test: test-classes
-	java -cp "junit-4.13.2.jar:hamcrest-core-1.3.jar:vlille/test:vlille/classes" org.junit.runner.JUnitCore vlille.*
-
+	java -cp :$(TEST_DIR):$(CLASSES_DIR):$(JUNIT_JAR) org.junit.runner.JUnitCore Vlille/test/vlille.* 
 # Nettoyage
 clean:
 	rm -rf $(CLASSES_DIR)/*

@@ -34,16 +34,23 @@ Le projet Vlille est une implémentation en Java d'un système de partage de vé
 make run
 
 ### Compilation et execution des tests :
+pour executer les tests vous pouvez utiliser visual studio, vous ouvrez le projet et vous telecharger l'extension de junit, vous executez les tests et normalement tout les tests doivent passés. 
 make test
+
+### Génerer la javadoc : 
+make javadoc
 
 ### Générer et exécuter l’archive (.jar) du projet : 
 make jar
+
+
 
 ## Éléments de Code Saillants
 ### Conception
 La structure du projet suit une architecture modulaire.
 Utilisation des patterns design State, singleton, Strategy.
 
+## choses a savoir :  
 
 
  

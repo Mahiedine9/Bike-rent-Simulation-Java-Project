@@ -19,7 +19,8 @@ public class Bike implements Transport {
      * @param id              The unique identifier of the bike.
      * @param hasBasket       True if the bike has a basket; otherwise, false.
      * @param hasLuggageRack  True if the bike has a luggage rack; otherwise, false.
-     * @param state           The initial state of the bike (e.g., InService, OutOfService).
+     * @param state 
+     *           The initial state of the bike (e.g., InService, OutOfService).
      */
     public Bike(int id, boolean hasBasket, boolean hasLuggageRack, State state) {
         this.id = id;
@@ -86,7 +87,7 @@ public class Bike implements Transport {
     /**
      * Updates the rental count of the bike.
      *
-     * @param rentalCount The new rental count.
+     * 
      */
     public void UpdateRentalCount() {
         this.rentalCount++;

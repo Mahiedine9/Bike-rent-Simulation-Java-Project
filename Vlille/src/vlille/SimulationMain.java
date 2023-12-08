@@ -69,13 +69,11 @@ public class SimulationMain {
             } else {
                 System.out.println("Choix non reconnu. Veuillez répondre par 'oui' ou 'non'.");
             }
-
             scanner.close();
 
-            
-
-            
+     
 
         }
+        
     } 
 }
