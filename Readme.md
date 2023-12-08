@@ -35,13 +35,14 @@ make run
 
 ### Compilation et execution des tests :
 pour executer les tests vous pouvez utiliser visual studio, vous ouvrez le projet et vous telecharger l'extension de junit, vous executez les tests et normalement tout les tests doivent passés. 
-make test
+ou make test mais pour l'instant ca marche pas, on vas essayer de le regler sinon il faut ouvrir le projet sur visual studio.
 
 ### Génerer la javadoc : 
 make javadoc
 
 ### Générer et exécuter l’archive (.jar) du projet : 
 make jar
+
 
 
 
