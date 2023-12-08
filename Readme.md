@@ -29,19 +29,19 @@ Le projet Vlille est une implémentation en Java d'un système de partage de vé
 2. javadoc -d doc src/vlille/*.java
 
 ### Compilation du src :
-javac -d classes src/**/*.java 
+javac -d vlille/classes vlille/src/**/*.java 
 
 ### Éxecution du Main : 
-java -cp classes vlille.Main 
+java -cp vlille/classes vlille.Main 
 
 ### Compilation des tests :
-javac -cp junit-4.13.2.jar:classes test/**/*.java
+javac -cp junit-4.13.2.jar:vlille/classes test/**/*.java
 
 ### Éxecution des tests :
-java -cp "junit-4.13.2.jar:hamcrest-core-1.3.jar:test:classes" org.junit.runner.JUnitCore vlille.ClasseToTest  
+java -cp "junit-4.13.2.jar:hamcrest-core-1.3.jar:vlille/test:vlille/classes" org.junit.runner.JUnitCore vlille.ClasseToTest  
 
 ### Génération et exécution de l'archive (.jar) :
-1. jar cvfe vlille.jar vlille.Main -C classes .
+1. jar cvfe vlille.jar vlille.Main -C vlille/classes .
 2. java -jar vlille.jar
 
 
