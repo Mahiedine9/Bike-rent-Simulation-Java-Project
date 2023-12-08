@@ -15,7 +15,7 @@ JFLAGS = -g -d $(CLASSES_DIR) -cp $(SRC_DIR)
 
 # Liste des fichiers source
 SOURCES = $(wildcard $(SRC_DIR)/vlille/*.java) \
-          $(wildcard $(SRC_DIR)/exception/*.java)
+          $(wildcard $(SRC_DIR)/exceptions/*.java)
 
 # Liste des fichiers de test
 TESTS = $(wildcard $(TEST_DIR)/vlille/*.java)
@@ -32,10 +32,11 @@ classes: $(SOURCES)
 
 # Compilation des tests
 test-classes: classes $(TESTS)
-	javac -cp $(JUNIT_JAR):$(CLASSES_DIR) $(TEST_DIR)/vlille/*.java
+	javac -cp $(JUNIT_JAR):$(CLASSES_DIR) -d $(CLASSES_DIR) $(TEST_DIR)/vlille/*.java
 
 javadoc:
 	javadoc -cp $(CLASSES_DIR) Vlille/src/vlille/*.java -d docs
+
 
 # Exécution
 run: classes
@@ -45,10 +46,13 @@ run: classes
 
 # Exécution des tests
 test: test-classes
-	java -cp :$(TEST_DIR):$(CLASSES_DIR):$(JUNIT_JAR) org.junit.runner.JUnitCore Vlille/test/vlille.* 
+	java -cp :$(TEST_DIR):$(CLASSES_DIR):$(JUNIT_JAR) org.junit.runner.JUnitCore Vlille/src/classes/vlille.* 
+
 # Nettoyage
-clean:
-	rm -rf $(CLASSES_DIR)/*
+clear:
+	rm -rf $(CLASSES_DIR)/vlille/*.class
+	rm -rf $(CLASSES_DIR)/exceptions/*.class
+
 
 # Génération du fichier JAR
 jar: classes
