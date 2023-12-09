@@ -44,4 +44,8 @@ public abstract class State {
      * @throws BikeNotRemovableException if the bike cannot be removed from the station in its current state.
      */
     public abstract void Take(Bike bike, Station station) throws BikeNotRemovableException;
+
+    public boolean isRented() {
+        return false;
+    }
 }
