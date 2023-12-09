@@ -1,60 +1,108 @@
 package vlille;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 import exceptions.*;
 
 public class SimulationMain2 {
-    public static void main(String[] args) {
-        // Initialize Control Center and strategies
-        RedistributionStrategy strategy = new RandomStrategy(ControlCenter.getInstance(null, 10));
-        ControlCenter controlCenter = ControlCenter.getInstance(strategy, 10);
 
-        // Create Stations
-        ArrayList<Station> stations = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
-            stations.add(new Station("Station " + i, new Random().nextInt(11) + 10)); // Stations with capacity between 10 and 20
-        }
+    public static void main(String[] args) throws OccupiedLocationException {
+        
+        // Initialize the control center and strategy
+        RandomStrategy randomStrategy = new RandomStrategy(null);
+        ControlCenter controlCenter = ControlCenter.getInstance(randomStrategy, 10);
+        randomStrategy.SetControlCenter(controlCenter);
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
 
-        // Add Stations to Control Center
-        for (Station station : stations) {
+        // Create stations
+        System.out.print("How many stations would you like to create? ");
+        int nbOfStations = scanner.nextInt();
+        for (int i = 0; i < nbOfStations; i++) {
+            Station station = new Station("Station " + i, random.nextInt(10) + 10); // Stations with random capacity
+            for (int j = 0; j < station.getCapacity(); j++) {
+                Bike bike = random.nextBoolean() ? new ClassicBike(j, random.nextBoolean(), random.nextBoolean(), new InService())
+                                                 : new ElectricBike(j, random.nextBoolean(), random.nextBoolean(), new InService());
+                station.addBike(bike, j);
+            }
             controlCenter.AddStation(station);
         }
 
-        // Create Bikes and add to Stations
-        for (int i = 0; i < 50; i++) {
-            Bike bike = i % 2 == 0 ? new ClassicBike(i, new Random().nextBoolean(), new Random().nextBoolean(), new InService())
-                                    : new ElectricBike(i, new Random().nextBoolean(), new Random().nextBoolean(), new InService());
-            Station station = stations.get(new Random().nextInt(stations.size()));
-            try {
-                station.addBike(bike, new Random().nextInt(station.getCapacity()));
-            } catch (OccupiedLocationException e) {
-                System.err.println(e.getMessage());
-            }
-        }
+        // Simulation loop
+        while (true) {
+            System.out.println("\nSimulation Actions:");
+            System.out.println("1. Rent a bike");
+            System.out.println("2. Return a bike");
+            System.out.println("3. Repair bikes");
+            System.out.println("4. Redistribute bikes");
+            System.out.println("5. Exit simulation");
+            System.out.print("Choose an action: ");
+            int choice = scanner.nextInt();
 
-        // Simulation Loop
-        for (int i = 0; i < 100; i++) {
-            System.out.println("Simulation iteration: " + (i + 1));
-            
-            // Simulate random bike deposits and withdrawals
-            controlCenter.randomDepositWithdrawal();
 
-            // Optionally, add more complex simulation behavior here
+            switch (choice) {
+                // Case 1: Renting a bike
+                case 1:
+                System.out.println("Select a station to rent a bike (0-" + (nbOfStations-1) + "):");
+                int stationIndexToRent = scanner.nextInt(); 
+                Station stationToRent = controlCenter.getStations().get(stationIndexToRent);
+                System.out.println("Available bikes at " + stationToRent.getName() + ":");
 
-            // Pause for a short time to simulate time passing
-            try {
-                Thread.sleep(1000); // Pause for 1 second
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.err.println("Simulation interrupted");
+                for (Bike bike : stationToRent.getBikes()) {
+                    if (bike != null && bike.GetState() instanceof InService) { 
+                        System.out.println("Bike ID: " + bike.GetId());
+                    }
+                }
+                System.out.println("Enter Bike ID to rent:");
+                int bikeIdToRent = scanner.nextInt();
+                Bike bikeToRent = stationToRent.getBikes().stream()
+                                    .filter(b -> b.GetId() == bikeIdToRent && b.GetState() instanceof InService)
+                                    .findFirst()
+                                    .orElse(null);
+                if (bikeToRent != null) {
+                    bikeToRent.SetState(new Rented()); 
+                    System.out.println("You have rented Bike ID: " + bikeIdToRent);
+                } else {
+                    System.out.println("Bike not available for rent.");
+                }
                 break;
+
+                // Case 2: Returning a bike
+                case 2:
+                System.out.println("Select a station to return a bike (1-" + nbOfStations + "):");
+                int stationIndexToReturn = scanner.nextInt() - 1;
+                Station stationToReturn = controlCenter.getStations().get(stationIndexToReturn);
+                System.out.println("Enter Bike ID to return:");
+                int bikeIdToReturn = scanner.nextInt();
+
+                Bike bikeToReturn = stationToReturn.getBikes().stream()
+                                    .filter(b -> b.GetId() == bikeIdToReturn)
+                                    .findFirst()
+                                    .orElse(null);
+                if (bikeToReturn != null && bikeToReturn.GetState().isRented()) {
+                    bikeToReturn.SetState(new InService()); 
+                    System.out.println("You have returned Bike ID: " + bikeIdToReturn);
+                } else {
+                    System.out.println("Bike not found or not rented.");
+                }
+                break;
+
+                case 3:
+                    controlCenter.fix();
+                    System.out.println("Bikes repaired.");
+                    break;
+                case 4:
+                    controlCenter.distribute();
+                    System.out.println("Bikes redistributed.");
+                    break;
+                case 5:
+                    System.out.println("Exiting simulation.");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice, please try again.");
             }
         }
-
-        // Final status report
-        for (Station station : stations) {
-            System.out.println(station.getName() + " has " + station.getNumberOfBikes() + " bikes");
-        }
-    }
+    } 
 }
