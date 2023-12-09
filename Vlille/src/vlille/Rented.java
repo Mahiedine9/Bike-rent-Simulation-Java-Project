@@ -16,7 +16,6 @@ public class Rented extends State {
 
     @Override
     public void Deposit(Bike bike, Station station, int space) throws BikeNotReturnableException {
-        // Assuming the bike can be returned to any station
         try {
             station.addBike(bike, space);
             bike.SetState(new InService()); // Change state back to InService after return
