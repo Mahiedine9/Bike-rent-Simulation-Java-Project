@@ -28,19 +28,26 @@ public class RandomStrategy implements RedistributionStrategy {
             int bikesToMove = currentBikeCount - idealCapacity;
 
             while (bikesToMove > 0) {
-                Station targetStation = selectRandomStation(stations, station);
-                if (targetStation != null && !targetStation.IsFull() && targetStation != station) {
-                    try {
-                        Bike bikeToRemove = station.selectBikeForRemoval(); 
-                        station.TakeBike(bikeToRemove); 
-
-                        int spaceToAdd = random.nextInt(targetStation.getCapacity());
-                        targetStation.addBike(bikeToRemove, spaceToAdd); 
-                        bikesToMove--;
-                    } catch (BikeNotRemovableException | OccupiedLocationException e) {
-                        
-                        System.err.println("Failed to redistribute bike: " + e.getMessage());
+                int redistributionAttempts = 0;
+                while (redistributionAttempts < stations.size()) {
+                    Station targetStation = selectRandomStation(stations, station);
+                    if (targetStation != null && !targetStation.IsFull() && targetStation != station) {
+                        try {
+                            Bike bikeToRemove = station.selectBikeForRemoval(); 
+                            station.TakeBike(bikeToRemove); 
+                            int spaceToAdd = random.nextInt(targetStation.getCapacity());
+                            targetStation.addBike(bikeToRemove, spaceToAdd); 
+                            bikesToMove--;
+                            break;
+                        } catch (BikeNotRemovableException | OccupiedLocationException e) {
+                            System.err.println("Failed to redistribute bike: " + e.getMessage());
+                        }
                     }
+                    redistributionAttempts++;
+                }
+                if (redistributionAttempts >= stations.size()) {
+                    // Unable to redistribute this bike, move to the next
+                    break;
                 }
             }
         }
