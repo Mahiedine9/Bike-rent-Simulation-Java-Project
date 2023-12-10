@@ -93,9 +93,18 @@ public class SimulationMain {
                     System.out.println("Bikes repaired.");
                     break;
                 case 4:
-                    controlCenter.distribute();
-                    System.out.println("Bikes redistributed.");
-                    break;
+                controlCenter.distribute();
+                System.out.println("Bikes redistributed. Current state of stations:");
+            
+                for (Station station : controlCenter.getStations()) {
+                    System.out.println(station.getName() + " has " + station.getNumberOfBikes() + " bikes.");
+                    for (Bike bike : station.getBikes()) {
+                        if (bike != null) {
+                            System.out.println("    Bike ID: " + bike.GetId() + ", State: " + bike.GetState().getClass().getSimpleName());
+                        }
+                    }
+                }
+                break;
                 case 5:
                     System.out.println("Exiting simulation.");
                     scanner.close();
