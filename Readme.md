@@ -15,7 +15,7 @@ Le projet Vlille est une implémentation en Java d'un système de partage de vé
  - [x] UML réalisé
  - [x] Classes 
  - [x] Tests 
- - [ ] Main
+ - [x] Main
 
 
 ## HowTo :
@@ -26,16 +26,20 @@ Le projet Vlille est une implémentation en Java d'un système de partage de vé
 
 
 ### Générez la documentation : 
-1. Placez-vous dans la racine du projet cloné (pour toutes les autres commandes également)
+1. Placez-vous dans la racine du projet cloné 
 2. $ make javadoc
 
 ### Compiler et exécuter les sources : 
 
 make run
 
-### Compilation et execution des tests :
-pour executer les tests vous pouvez utiliser visual studio, vous ouvrez le projet et vous telecharger l'extension de junit, vous executez les tests et normalement tout les tests doivent passés. 
-ou make test mais pour l'instant ca marche pas, on vas essayer de le regler sinon il faut ouvrir le projet sur visual studio.
+### Compilation des tests :
+
+make test-classes 
+
+### Execution des tests :
+1. cd vlille
+2. java -cp ".:vlille/junit-4.13.2.jar:vlille/hamcrest-core-1.3.jar:vlille/test:vlille/src/classes" org.junit.runner.JUnitCore vlille.ClassToTest
 
 ### Génerer la javadoc : 
 make javadoc
@@ -45,13 +49,18 @@ make jar
 
 
 
-
 ## Éléments de Code Saillants
-### Conception
-La structure du projet suit une architecture modulaire.
-Utilisation des patterns design State, singleton, Strategy.
+### Conception du Projet et Modèles de Conception Utilisés
 
-## choses a savoir :  
+- **Architecture Modulaire** : Le projet est structuré en différentes classes telles que `Bike`, `Station`, et `ControlCenter`, reflétant une architecture modulaire et une séparation claire des responsabilités.
+
+- **Modèle Stratégie (Strategy Pattern)** : Implémenté dans `RandomStrategy` et `RoundRobinStrategy`, ce modèle permet de modifier dynamiquement l'algorithme de redistribution des vélos sans changer le code client.
+
+- **Singleton dans `ControlCenter`** : Cette classe utilise le modèle Singleton pour garantir une instance unique du centre de contrôle dans l'application, centralisant la gestion des stations et des vélos.
+
+- **État (State Pattern) dans la Gestion des Vélos** : Les classes d'état comme `InService`, `OutOfService`, et `Rented` illustrent l'utilisation du modèle d'état pour gérer les différents états d'un vélo de manière fluide et extensible.
+
+Ces éléments de conception montrent l'attention portée aux principes de conception solide et à la flexibilité du système pour faciliter l'évolution et la maintenance du projet.
 
 
  
