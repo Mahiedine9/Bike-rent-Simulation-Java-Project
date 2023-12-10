@@ -26,20 +26,18 @@ Le projet Vlille est une implémentation en Java d'un système de partage de vé
 
 
 ### Générez la documentation : 
-1. Placez-vous dans la racine du projet cloné 
-2. $ make javadoc
+1. Placez-vous dans la racine du projet cloné (pour toutes les autres commandes également)
+2. make javadoc
 
 ### Compiler et exécuter les sources : 
-
 make run
 
 ### Compilation des tests :
-
 make test-classes 
 
 ### Execution des tests :
-1. cd vlille
-2. java -cp ".:vlille/junit-4.13.2.jar:vlille/hamcrest-core-1.3.jar:vlille/test:vlille/src/classes" org.junit.runner.JUnitCore vlille.ClassToTest
+
+java -cp ".:vlille/junit-4.13.2.jar:vlille/hamcrest-core-1.3.jar:vlille/test:vlille/src/classes" org.junit.runner.JUnitCore vlille.ClassToTest
 
 ### Génerer la javadoc : 
 make javadoc
